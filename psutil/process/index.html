@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>psutil</a>::<wbr><a class='mod' href=''>process</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-140' href='../../src/psutil/process.rs.html#1-468'>[src]</a></span></h1>
+        </span><a id='src-140' href='../../src/psutil/process.rs.html#1-474'>[src]</a></span></h1>
 <div class='docblock'><p>Read process-specific information from <code>/proc</code></p>
 
 <p>More information about specific fields can be found in
@@ -61,25 +61,26 @@ which declares PIDs to be signed 32 bit integers. <code>proc(5)</code> declares 
 PIDs use the <code>%d</code> format specifier.</p>
 
 <ul>
-<li><code>%d</code> / <code>%u</code> - 32 bit integers</li>
-<li><code>%ld</code> / <code>%lu</code> - 64 bit integers</li>
+<li><code>%d</code> / <code>%u</code> - 32 bit signed and unsigned integers</li>
+<li><code>%ld</code> / <code>%lu</code> - 64 bit signed and unsigned integers</li>
 </ul>
 
-<p><strong>WARNING</strong>: Rust currently has no support for 128 bit integers<a href="https://github.com/rust-lang/rfcs/issues/521">2</a>, so
-<code>%llu</code> (used by the <code>starttime</code> and <code>delayacct_blkio_ticks</code> fields) is is
+<p><strong>WARNING</strong>: Rust currently has no support for 128 bit integers<sup><a href="https://github.com/rust-lang/rfcs/issues/521">rfc521</a></sup>
+so <code>%llu</code> (used by the <code>starttime</code> and <code>delayacct_blkio_ticks</code> fields) is is
 instead represented by a 64 bit integer, with the hope that doesn&#39;t break.</p>
 
 <h3 id="cpu-time-fields-and-clock-ticks" class='section-header'><a
                            href="#cpu-time-fields-and-clock-ticks">CPU time fields and clock ticks</a></h3>
-<p>The CPU time fields are very strange. Inside the Linux kernel they all use
-the same type[1:L361], but when printed use different types[1:L456,L489] -
-<code>utime</code>, <code>stime</code> and <code>gtime</code> are unsigned, whereas <code>cutime</code>, <code>cstime</code> and
-<code>cgtime</code> are signed.</p>
+<p>The CPU time fields are very strange. Inside the Linux kernel they each use
+the same type<sup><a href="https://github.com/torvalds/linux/blob/4f671fe2f9523a1ea206f63fe60a7c7b3a56d5c7/fs/proc/array.c#L361">array.c:361</a></sup> but when printed use different
+types<sup><a href="https://github.com/torvalds/linux/blob/4f671fe2f9523a1ea206f63fe60a7c7b3a56d5c7/fs/proc/array.c#L456">array.c:456</a></sup> - the fields <code>utime</code>, <code>stime</code> and <code>gtime</code> are
+unsigned integers, whereas <code>cutime</code>, <code>cstime</code> and <code>cgtime</code> are signed
+integers.</p>
 
-<p>Many fields return a value in terms of clock ticks. These can be divided by
-<code>sysconf(_SC_CLK_TCK)</code> to get a value in seconds.</p>
-
-<p><strong>WARNING</strong>: In the furture this conversion may be done automatically.</p>
+<p>These values are all returned as a number of clock ticks, which can be
+divided by <code>sysconf(_SC_CLK_TCK)</code> to get a value in seconds. The <code>Process</code>
+struct does this conversion automatically, and all CPU time fields use the
+<code>f64</code> type.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>
@@ -92,7 +93,7 @@ the same type[1:L361], but when printed use different types[1:L456,L489] -
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Process.html'
                                title='psutil::process::Process'>Process</a></td>
-                        <td class='docblock short'><p>Information about a process gathered from <code>/proc/pid/stat</code>.</p>
+                        <td class='docblock short'><p>Information about a process gathered from <code>/proc/[pid]/stat</code>.</p>
 </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>

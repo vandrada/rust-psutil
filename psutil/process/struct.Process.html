@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>psutil</a>::<wbr><a href='index.html'>process</a>::<wbr><a class='struct' href=''>Process</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-658' href='../../src/psutil/process.rs.html#176-307'>[src]</a></span></h1>
+        </span><a id='src-658' href='../../src/psutil/process.rs.html#182-313'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Process {
     pub pid: <a class='type' href='../../psutil/type.PID.html' title='psutil::PID'>PID</a>,
     pub comm: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
@@ -79,7 +79,10 @@
     pub cguest_time: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
     pub exit_code: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
     // some fields omitted
-}</pre><div class='docblock'><p>Information about a process gathered from <code>/proc/pid/stat</code>.</p>
+}</pre><div class='docblock'><p>Information about a process gathered from <code>/proc/[pid]/stat</code>.</p>
+
+<p><strong>IMPORTANT</strong>: See the module level notes for information on the types used
+by this struct, as some do not match those used by <code>/proc/[pid]/stat</code>.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr><td id='structfield.pid'><a class='stability Unmarked' title='No stability level'></a><code>pid</code></td><td><div class='docblock'><p>PID of the process</p>
 </div></td></tr><tr><td id='structfield.comm'><a class='stability Unmarked' title='No stability level'></a><code>comm</code></td><td><div class='docblock'><p>Filename of the executable</p>

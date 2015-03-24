@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Memory","Memory usage of a process"],["Process","Information about a process gathered from `/proc/pid/stat`."]],"enum":[["State","Possible statuses for a process"]],"fn":[["all","Return a vector of all processes in /proc"]]});
+initSidebarItems({"fn":[["all","Return a vector of all processes in /proc"]],"enum":[["State","Possible statuses for a process"]],"struct":[["Memory","Memory usage of a process"],["Process","Information about a process gathered from `/proc/[pid]/stat`."]]});

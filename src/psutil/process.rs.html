@@ -508,6 +508,12 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Read process-specific information from `/proc`</span>
 <span class='doccomment'>//!</span>
@@ -525,28 +531,31 @@
 <span class='doccomment'>//! which declares PIDs to be signed 32 bit integers. `proc(5)` declares that</span>
 <span class='doccomment'>//! PIDs use the `%d` format specifier.</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! - `%d` / `%u` - 32 bit integers</span>
-<span class='doccomment'>//! - `%ld` / `%lu` - 64 bit integers</span>
+<span class='doccomment'>//! - `%d` / `%u` - 32 bit signed and unsigned integers</span>
+<span class='doccomment'>//! - `%ld` / `%lu` - 64 bit signed and unsigned integers</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! **WARNING**: Rust currently has no support for 128 bit integers[2], so</span>
-<span class='doccomment'>//! `%llu` (used by the `starttime` and `delayacct_blkio_ticks` fields) is is</span>
+<span class='doccomment'>//! **WARNING**: Rust currently has no support for 128 bit integers^[rfc521]</span>
+<span class='doccomment'>//! so `%llu` (used by the `starttime` and `delayacct_blkio_ticks` fields) is is</span>
 <span class='doccomment'>//! instead represented by a 64 bit integer, with the hope that doesn&#39;t break.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ### CPU time fields and clock ticks</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! The CPU time fields are very strange. Inside the Linux kernel they all use</span>
-<span class='doccomment'>//! the same type[1:L361], but when printed use different types[1:L456,L489] -</span>
-<span class='doccomment'>//! `utime`, `stime` and `gtime` are unsigned, whereas `cutime`, `cstime` and</span>
-<span class='doccomment'>//! `cgtime` are signed.</span>
+
+<span class='doccomment'>//! The CPU time fields are very strange. Inside the Linux kernel they each use</span>
+<span class='doccomment'>//! the same type^[array.c:361] but when printed use different</span>
+<span class='doccomment'>//! types^[array.c:456] - the fields `utime`, `stime` and `gtime` are</span>
+<span class='doccomment'>//! unsigned integers, whereas `cutime`, `cstime` and `cgtime` are signed</span>
+<span class='doccomment'>//! integers.</span>
+
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! Many fields return a value in terms of clock ticks. These can be divided by</span>
-<span class='doccomment'>//! `sysconf(_SC_CLK_TCK)` to get a value in seconds.</span>
+<span class='doccomment'>//! These values are all returned as a number of clock ticks, which can be</span>
+<span class='doccomment'>//! divided by `sysconf(_SC_CLK_TCK)` to get a value in seconds. The `Process`</span>
+<span class='doccomment'>//! struct does this conversion automatically, and all CPU time fields use the</span>
+<span class='doccomment'>//! `f64` type.</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! **WARNING**: In the furture this conversion may be done automatically.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! [1]: https://github.com/torvalds/linux/blob/4f671fe2f9523a1ea206f63fe60a7c7b3a56d5c7/fs/proc/array.c</span>
-<span class='doccomment'>//! [2]: https://github.com/rust-lang/rfcs/issues/521</span>
+<span class='doccomment'>//! [rfc521]: https://github.com/rust-lang/rfcs/issues/521</span>
+<span class='doccomment'>//! [array.c:361]: https://github.com/torvalds/linux/blob/4f671fe2f9523a1ea206f63fe60a7c7b3a56d5c7/fs/proc/array.c#L361</span>
+<span class='doccomment'>//! [array.c:456]: https://github.com/torvalds/linux/blob/4f671fe2f9523a1ea206f63fe60a7c7b3a56d5c7/fs/proc/array.c#L456</span>
 <span class='doccomment'>//!</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>env</span>::<span class='ident'>page_size</span>;
@@ -682,7 +691,10 @@
     }
 }
 
-<span class='doccomment'>/// Information about a process gathered from `/proc/pid/stat`.</span>
+<span class='doccomment'>/// Information about a process gathered from `/proc/[pid]/stat`.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// **IMPORTANT**: See the module level notes for information on the types used</span>
+<span class='doccomment'>/// by this struct, as some do not match those used by `/proc/[pid]/stat`.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Process</span> {
     <span class='doccomment'>/// PID of the process</span>
@@ -865,9 +877,9 @@
             <span class='ident'>cminflt</span>:                <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>10</span>]),
             <span class='ident'>majflt</span>:                 <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>11</span>]),
             <span class='ident'>cmajflt</span>:                <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>12</span>]),
-            <span class='ident'>utime</span>:                  <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
-            <span class='ident'>stime</span>:                  <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
-            <span class='ident'>cutime</span>:                 <span class='ident'>i64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
+            <span class='ident'>utime</span>:                  <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>13</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
+            <span class='ident'>stime</span>:                  <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>14</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
+            <span class='ident'>cutime</span>:                 <span class='ident'>i64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>15</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
             <span class='ident'>cstime</span>:                 <span class='ident'>i64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
             <span class='ident'>priority</span>:               <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>17</span>]),
             <span class='ident'>nice</span>:                   <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>18</span>]),
@@ -894,8 +906,8 @@
             <span class='ident'>rt_priority</span>:            <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>39</span>]),
             <span class='ident'>policy</span>:                 <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>40</span>]),
             <span class='ident'>delayacct_blkio_ticks</span>:  <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>41</span>]),
-            <span class='ident'>guest_time</span>:             <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
-            <span class='ident'>cguest_time</span>:            <span class='ident'>i64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>16</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
+            <span class='ident'>guest_time</span>:             <span class='ident'>u64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>42</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
+            <span class='ident'>cguest_time</span>:            <span class='ident'>i64</span>::<span class='ident'>from_str</span>(<span class='ident'>stat</span>[<span class='number'>43</span>]).<span class='ident'>unwrap</span>() <span class='kw'>as</span> <span class='ident'>f64</span> <span class='op'>/</span> <span class='ident'>ticks_per_second</span>,
             <span class='ident'>start_data</span>:             <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>44</span>]),
             <span class='ident'>end_data</span>:               <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>45</span>]),
             <span class='ident'>start_brk</span>:              <span class='macro'>from_str</span><span class='macro'>!</span>(<span class='ident'>stat</span>[<span class='number'>46</span>]),
