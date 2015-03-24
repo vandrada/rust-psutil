@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Process` struct in crate `psutil`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Process">
+
+    <title>psutil::process::Process - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>psutil</a>::<wbr><a href='index.html'>process</a></p><script>window.sidebarCurrent = {name: 'Process', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>psutil</a>::<wbr><a href='index.html'>process</a>::<wbr><a class='struct' href=''>Process</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-658' href='../../src/psutil/process.rs.html#176-307'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Process {
+    pub pid: <a class='type' href='../../psutil/type.PID.html' title='psutil::PID'>PID</a>,
+    pub comm: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    pub state: <a class='enum' href='../../psutil/process/enum.State.html' title='psutil::process::State'>State</a>,
+    pub ppid: <a class='type' href='../../psutil/type.PID.html' title='psutil::PID'>PID</a>,
+    pub pgrp: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub session: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub tty_nr: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub tpgid: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub flags: <a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,
+    pub minflt: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub cminflt: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub majflt: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub cmajflt: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub utime: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub stime: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub cutime: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub cstime: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub priority: <a href='http://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub nice: <a href='http://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub num_threads: <a href='http://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub starttime: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub vsize: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub rss: <a href='http://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub rsslim: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub wchan: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub exit_signal: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub processor: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub rt_priority: <a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,
+    pub policy: <a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,
+    pub delayacct_blkio_ticks: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub guest_time: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub cguest_time: <a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub exit_code: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    // some fields omitted
+}</pre><div class='docblock'><p>Information about a process gathered from <code>/proc/pid/stat</code>.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.pid'><a class='stability Unmarked' title='No stability level'></a><code>pid</code></td><td><div class='docblock'><p>PID of the process</p>
+</div></td></tr><tr><td id='structfield.comm'><a class='stability Unmarked' title='No stability level'></a><code>comm</code></td><td><div class='docblock'><p>Filename of the executable</p>
+</div></td></tr><tr><td id='structfield.state'><a class='stability Unmarked' title='No stability level'></a><code>state</code></td><td><div class='docblock'><p>State of the process as an enum</p>
+</div></td></tr><tr><td id='structfield.ppid'><a class='stability Unmarked' title='No stability level'></a><code>ppid</code></td><td><div class='docblock'><p>PID of the parent process</p>
+</div></td></tr><tr><td id='structfield.pgrp'><a class='stability Unmarked' title='No stability level'></a><code>pgrp</code></td><td><div class='docblock'><p>Process group ID</p>
+</div></td></tr><tr><td id='structfield.session'><a class='stability Unmarked' title='No stability level'></a><code>session</code></td><td><div class='docblock'><p>Session ID</p>
+</div></td></tr><tr><td id='structfield.tty_nr'><a class='stability Unmarked' title='No stability level'></a><code>tty_nr</code></td><td><div class='docblock'><p>Controlling terminal of the process [TODO: Actually two numbers]</p>
+</div></td></tr><tr><td id='structfield.tpgid'><a class='stability Unmarked' title='No stability level'></a><code>tpgid</code></td><td><div class='docblock'><p>ID of the foreground group of the controlling terminal</p>
+</div></td></tr><tr><td id='structfield.flags'><a class='stability Unmarked' title='No stability level'></a><code>flags</code></td><td><div class='docblock'><p>Kernel flags for the process</p>
+</div></td></tr><tr><td id='structfield.minflt'><a class='stability Unmarked' title='No stability level'></a><code>minflt</code></td><td><div class='docblock'><p>Minor faults</p>
+</div></td></tr><tr><td id='structfield.cminflt'><a class='stability Unmarked' title='No stability level'></a><code>cminflt</code></td><td><div class='docblock'><p>Minor faults by child processes</p>
+</div></td></tr><tr><td id='structfield.majflt'><a class='stability Unmarked' title='No stability level'></a><code>majflt</code></td><td><div class='docblock'><p>Major faults</p>
+</div></td></tr><tr><td id='structfield.cmajflt'><a class='stability Unmarked' title='No stability level'></a><code>cmajflt</code></td><td><div class='docblock'><p>Major faults by child processes</p>
+</div></td></tr><tr><td id='structfield.utime'><a class='stability Unmarked' title='No stability level'></a><code>utime</code></td><td><div class='docblock'><p>Time scheduled in user mode (seconds)</p>
+</div></td></tr><tr><td id='structfield.stime'><a class='stability Unmarked' title='No stability level'></a><code>stime</code></td><td><div class='docblock'><p>Time scheduled in kernel mode (seconds)</p>
+</div></td></tr><tr><td id='structfield.cutime'><a class='stability Unmarked' title='No stability level'></a><code>cutime</code></td><td><div class='docblock'><p>Time waited-for child processes were scheduled in user mode (seconds)</p>
+</div></td></tr><tr><td id='structfield.cstime'><a class='stability Unmarked' title='No stability level'></a><code>cstime</code></td><td><div class='docblock'><p>Time waited-for child processes were scheduled in kernel mode (seconds)</p>
+</div></td></tr><tr><td id='structfield.priority'><a class='stability Unmarked' title='No stability level'></a><code>priority</code></td><td><div class='docblock'><p>Priority value (-100..-2 | 0..39)</p>
+</div></td></tr><tr><td id='structfield.nice'><a class='stability Unmarked' title='No stability level'></a><code>nice</code></td><td><div class='docblock'><p>Nice value (-20..19)</p>
+</div></td></tr><tr><td id='structfield.num_threads'><a class='stability Unmarked' title='No stability level'></a><code>num_threads</code></td><td><div class='docblock'><p>Number of threads in the process</p>
+</div></td></tr><tr><td id='structfield.starttime'><a class='stability Unmarked' title='No stability level'></a><code>starttime</code></td><td><div class='docblock'><p>Time the process was started after system boot (clock ticks)</p>
+</div></td></tr><tr><td id='structfield.vsize'><a class='stability Unmarked' title='No stability level'></a><code>vsize</code></td><td><div class='docblock'><p>Virtual memory size in bytes</p>
+</div></td></tr><tr><td id='structfield.rss'><a class='stability Unmarked' title='No stability level'></a><code>rss</code></td><td><div class='docblock'><p>Resident Set Size (pages) [TODO: Calculate size in bytes]</p>
+</div></td></tr><tr><td id='structfield.rsslim'><a class='stability Unmarked' title='No stability level'></a><code>rsslim</code></td><td><div class='docblock'><p>Current soft limit on process RSS (bytes)</p>
+</div></td></tr><tr><td id='structfield.wchan'><a class='stability Unmarked' title='No stability level'></a><code>wchan</code></td><td><div class='docblock'><p>Channel the process is waiting on (address of a system call)</p>
+</div></td></tr><tr><td id='structfield.exit_signal'><a class='stability Unmarked' title='No stability level'></a><code>exit_signal</code></td><td><div class='docblock'><p>Signal sent to parent when process dies</p>
+</div></td></tr><tr><td id='structfield.processor'><a class='stability Unmarked' title='No stability level'></a><code>processor</code></td><td><div class='docblock'><p>Number of the CPU the process was last executed on</p>
+</div></td></tr><tr><td id='structfield.rt_priority'><a class='stability Unmarked' title='No stability level'></a><code>rt_priority</code></td><td><div class='docblock'><p>Real-time scheduling priority (0 | 1..99)</p>
+</div></td></tr><tr><td id='structfield.policy'><a class='stability Unmarked' title='No stability level'></a><code>policy</code></td><td><div class='docblock'><p>Scheduling policy</p>
+</div></td></tr><tr><td id='structfield.delayacct_blkio_ticks'><a class='stability Unmarked' title='No stability level'></a><code>delayacct_blkio_ticks</code></td><td><div class='docblock'><p>Aggregated block I/O delays (clock ticks)</p>
+</div></td></tr><tr><td id='structfield.guest_time'><a class='stability Unmarked' title='No stability level'></a><code>guest_time</code></td><td><div class='docblock'><p>Guest time of the process (seconds)</p>
+</div></td></tr><tr><td id='structfield.cguest_time'><a class='stability Unmarked' title='No stability level'></a><code>cguest_time</code></td><td><div class='docblock'><p>Guest time of the process&#39;s children (seconds)</p>
+</div></td></tr><tr><td id='structfield.exit_code'><a class='stability Unmarked' title='No stability level'></a><code>exit_code</code></td><td><div class='docblock'><p>The thread&#39;s exit status</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../psutil/process/struct.Process.html' title='psutil::process::Process'>Process</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(pid: <a class='type' href='../../psutil/type.PID.html' title='psutil::PID'>PID</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../psutil/process/struct.Process.html' title='psutil::process::Process'>Process</a>&gt;</code></h4>
+<div class='docblock'><p>Attempts to read process information from <code>/proc/[pid]/stat</code>.</p>
+
+<p><code>/stat</code> is seperated by spaces and contains a trailing newline.</p>
+
+<p>This should return a psutil/process specific error type, so that  errors
+can be raised by <code>FromStr</code> too</p>
+</div><h4 id='method.from_pidfile' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.from_pidfile' class='fnname'>from_pidfile</a>(path: &amp;<a class='struct' href='http://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../psutil/process/struct.Process.html' title='psutil::process::Process'>Process</a>&gt;</code></h4>
+<div class='docblock'><p>Create a Process by reading it&#39;s PID from a pidfile.</p>
+</div><h4 id='method.is_alive' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_alive' class='fnname'>is_alive</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Return <code>true</code> if the process was alive at the time it was read.</p>
+</div><h4 id='method.cmdline_vec' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.cmdline_vec' class='fnname'>cmdline_vec</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;&gt;</code></h4>
+<div class='docblock'><p>Read <code>/proc/[pid]/cmdline</code> as a vector.</p>
+
+<p>Returns <code>Err</code> if <code>/proc/[pid]/cmdline</code> is empty.</p>
+</div><h4 id='method.cmdline' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.cmdline' class='fnname'>cmdline</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;</code></h4>
+<div class='docblock'><p>Return the result of <code>cmdline_vec</code> as a String.</p>
+</div><h4 id='method.memory' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.memory' class='fnname'>memory</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../psutil/process/struct.Memory.html' title='psutil::process::Memory'>Memory</a>&gt;</code></h4>
+<div class='docblock'><p>Reads <code>/proc/[pid]/statm</code> into a struct.</p>
+</div><h4 id='method.kill' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.kill' class='fnname'>kill</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<div class='docblock'><p>Send SIGKILL to the process.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../psutil/process/struct.Process.html' title='psutil::process::Process'>Process</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "psutil";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>
